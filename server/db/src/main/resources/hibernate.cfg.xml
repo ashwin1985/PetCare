@@ -19,5 +19,9 @@
         <property name="hibernate.hikari.autoCommit">false</property>
         <!-- mapping class with hibernate -->
         <mapping class="com.petcare.db.entities.Account"></mapping>
+        <mapping class="com.petcare.db.entities.AccountHistory"></mapping>
+        <mapping class="com.petcare.db.entities.Message"></mapping>
+        <mapping class="com.petcare.db.entities.Pet"></mapping>
+        <mapping class="com.petcare.db.entities.User"></mapping>
     </session-factory>
 </hibernate-configuration>

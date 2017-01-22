@@ -88,6 +88,7 @@ apply plugin: 'io.ratpack.ratpack-java'
 mainClassName = 'com.petcare.server.app.Main'
 
 dependencies {
+    compile project(":db")
     compile ratpack.dependency("guice")
     compile 'javax.el:javax.el-api:2.2.4'
     compile 'javax.validation:validation-api:1.1.0.Final'

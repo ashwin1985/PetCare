@@ -17,16 +17,7 @@ public class User {
     private List<Pet> ownedAndPreferredPets;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
-    @GenericGenerator(
-            name = "user_seq_gen",
-            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "user_seq_gen"),
-                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
-                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1"),
-                    @org.hibernate.annotations.Parameter(name = "optimizer", value = "pooled-lo")
-            })
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getId() {
         return id;
     }
