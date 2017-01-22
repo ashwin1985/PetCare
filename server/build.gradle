@@ -1,0 +1,114 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal()
+
+        dependencies {
+            classpath "io.ratpack:ratpack-gradle:1.4.0"
+        }
+    }
+}
+
+allprojects {
+    group 'com.petcare'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'scala'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal()
+    }
+
+    sourceSets {
+        test {
+            groovy {
+                srcDir 'src/test/unit/groovy'
+            }
+
+            groovy {
+                srcDir 'src/test/functional/groovy'
+            }
+        }
+
+        testUnit {
+            groovy {
+                srcDir 'src/test/unit/groovy'
+            }
+
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            resources.srcDir 'src/test/unit/resources'
+        }
+
+        testFunctional {
+            groovy {
+                srcDir 'src/test/functional/groovy'
+            }
+
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            resources.srcDir 'src/test/functional/resources'
+        }
+
+        testIntegration {
+            groovy {
+                srcDir 'src/test/integration/groovy'
+            }
+
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            resources.srcDir 'src/test/integration/resources'
+        }
+    }
+
+    dependencies {
+        testUnitCompile configurations.testCompile
+        testUnitRuntime configurations.testRuntime
+
+        testFunctionalCompile configurations.testCompile
+        testFunctionalRuntime configurations.testRuntime
+
+        testIntegrationCompile configurations.testCompile
+        testIntegrationRuntime configurations.testRuntime
+
+        //unit and functional test
+        compile 'org.codehaus.groovy:groovy:2.4.4'
+        compile 'org.spockframework:spock-core:1.0-groovy-2.4'
+        testRuntime "cglib:cglib-nodep:3.2.4"
+    }
+}
+
+apply plugin: 'io.ratpack.ratpack-java'
+
+mainClassName = 'com.petcare.server.app.Main'
+
+dependencies {
+    compile ratpack.dependency("guice")
+    compile 'javax.el:javax.el-api:2.2.4'
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'org.hibernate:hibernate-validator:5.2.1.Final'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.13"
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class' : mainClassName
+    }
+
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
+artifacts {
+    archives rootProject.tasks.getByName("fatJar")
+}

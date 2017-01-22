@@ -1,0 +1,14 @@
+# Intelli J IDE files
+**/.idea/
+
+# Common Ignore Folders
+**/build/
+**/.gradle/
+**/dist/
+**/log/
+**/logs/
+
+# Common Ignore Files
+*.iml
+*.ipr
+*.iws

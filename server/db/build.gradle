@@ -1,0 +1,5 @@
+dependencies {
+    compile "org.hibernate:hibernate-core:5.2.1.Final"
+    runtime "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.0.2"
+    compile "com.zaxxer:HikariCP:2.4.5"
+}
